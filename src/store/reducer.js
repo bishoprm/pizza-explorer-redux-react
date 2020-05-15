@@ -67,24 +67,3 @@ export default function reducer(state = initialState, action) {
     }
   }
 }
-
-// button onClick={() => like(pizza.id)}>
-//                   {user.likes.includes(pizza.id) ? "♥" : "♡"}
-//  case "TOGGLE_FAVORITE_PIZZA": {
-//       if (initialState.user.favorites.includes(action.payload))
-//         return {
-//           ...state,
-//           user: {
-//             ...state.user,
-//             favorites:[...state.user.favorites, action.payload]
-//           }
-//         } else {
-//           return {
-//             ...state,
-//             user: {
-//               ...state.user,
-//               favorites:[...state.user.favorites, !action.payload]
-//             }
-//           }
-//         }
-//     }
