@@ -1,6 +1,7 @@
 const initialState = {
   user: {
     name: "Helva",
+    likes: [161235, 67283],
   },
   pizzas: [
     {
@@ -30,13 +31,17 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case "ADD_PIZZA": {
+      // 3. (steps 1-2 in AddPizzaForm.js) handle reaction in reducer and then there's a new state
+      // use this console.log often:
+      console.log("STATE:", state, "ACTION:", action);
       // => Ask yourself: what is action.payload?
       return {
-        ...state,
+        // state.push(action.payload): not allowed because it's a mutation!
+        ...state, // copying and keeping the same user data
         pizzas: [
-          ...state.pizzas,
+          ...state.pizzas, // copying and keeping the other pizza data
           {
-            id: action.payload.id,
+            id: state.pizzas.length, // adding new pizza. action.payload.id
             name: action.payload.name,
             description: action.payload.description,
             bought: 0,
@@ -44,8 +49,42 @@ export default function reducer(state = initialState, action) {
         ],
       };
     }
+    case "LIKE_PIZZA": {
+      if (state.user.likes.includes(action.payload)) {
+        const newLikes = state.user.likes.filter((id) => {
+          return id !== action.payload;
+        });
+        return { ...state, user: { ...state.user, likes: newLikes } };
+      } else {
+        return {
+          ...state,
+          user: { ...state.user, likes: [...state.user.likes, action.payload] }, // keep or override data?
+        };
+      }
+    }
     default: {
       return state;
     }
   }
 }
+
+// button onClick={() => like(pizza.id)}>
+//                   {user.likes.includes(pizza.id) ? "♥" : "♡"}
+//  case "TOGGLE_FAVORITE_PIZZA": {
+//       if (initialState.user.favorites.includes(action.payload))
+//         return {
+//           ...state,
+//           user: {
+//             ...state.user,
+//             favorites:[...state.user.favorites, action.payload]
+//           }
+//         } else {
+//           return {
+//             ...state,
+//             user: {
+//               ...state.user,
+//               favorites:[...state.user.favorites, !action.payload]
+//             }
+//           }
+//         }
+//     }
