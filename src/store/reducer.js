@@ -52,7 +52,7 @@ export default function reducer(state = initialState, action) {
     case "LIKE_PIZZA": {
       if (state.user.likes.includes(action.payload)) {
         const newLikes = state.user.likes.filter((id) => {
-          return id !== action.payload;
+          return id !== action.payload; // remove the like
         });
         return { ...state, user: { ...state.user, likes: newLikes } };
       } else {
